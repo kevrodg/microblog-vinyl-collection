@@ -2,14 +2,12 @@
 <div class="vinyl-collection">
   <h1>{{ .Site.Params.vinyl_page_title | default "Vinyl Collection" }}</h1>
   
-  {{ $vinylPages := where .Site.Pages "Params.type" "vinyl" }}
-  
   <div class="vinyl-stats">
-    <p>{{ len $vinylPages }} records in collection</p>
+    <p>{{ len .Pages }} records in collection</p>
   </div>
 
   <div class="vinyl-grid">
-    {{ range $vinylPages }}
+    {{ range .Pages }}
     <article class="vinyl-record">
       {{ with .Params.cover }}
       <div class="vinyl-cover">
