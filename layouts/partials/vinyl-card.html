@@ -1,0 +1,39 @@
+{{- /*
+  Renders a vinyl record card from a post.
+  Pass the post page context to this partial.
+*/ -}}
+
+{{- $vinyl := partial "vinyl-parse.html" . -}}
+
+<article class="vinyl-record">
+  {{- with $vinyl.cover }}
+  <div class="vinyl-cover">
+    <a href="{{ $vinyl.permalink }}">
+      <img src="{{ . }}" alt="{{ $vinyl.album }} cover" loading="lazy">
+    </a>
+  </div>
+  {{- end }}
+  <div class="vinyl-info">
+    <h2 class="vinyl-album">
+      <a href="{{ $vinyl.permalink }}">{{ $vinyl.album | default "Unknown Album" }}</a>
+    </h2>
+    {{- with $vinyl.artist }}
+    <p class="vinyl-artist">{{ . }}</p>
+    {{- end }}
+    {{- with $vinyl.label }}
+    <p class="vinyl-label">{{ . }}</p>
+    {{- end }}
+    {{- with $vinyl.year }}
+    <p class="vinyl-year">{{ . }}</p>
+    {{- end }}
+    <div class="vinyl-meta-tags">
+      {{- with $vinyl.format }}
+      <span class="vinyl-format">{{ . }}</span>
+      {{- end }}
+      {{- range $vinyl.genres }}
+      <span class="vinyl-genre">{{ . }}</span>
+      {{- end }}
+    </div>
+  </div>
+  <a href="{{ $vinyl.permalink }}" class="vinyl-link">View Details</a>
+</article>

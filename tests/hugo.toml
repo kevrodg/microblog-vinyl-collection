@@ -1,0 +1,11 @@
+baseURL = "http://test.example.com/"
+languageCode = "en-us"
+title = "Test Vinyl Collection Site"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[params]
+  vinyl_page_title = "My Test Vinyl Collection"
+  vinyl_category = "Vinyl"

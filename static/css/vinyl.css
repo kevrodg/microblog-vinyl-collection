@@ -260,10 +260,114 @@
   margin: 2rem 0;
 }
 
+.vinyl-embed .vinyl-grid {
+  gap: 1.5rem;
+}
+
 .vinyl-embed .vinyl-record {
-  max-width: 400px;
+  max-width: 100%;
 }
 
 .vinyl-embed .vinyl-album {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
+}
+
+/* Empty state */
+.vinyl-empty {
+  text-align: center;
+  color: #666;
+  padding: 3rem 1rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+/* Album title links */
+.vinyl-album a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.vinyl-album a:hover {
+  text-decoration: underline;
+}
+
+/* Cover image links */
+.vinyl-cover a {
+  display: block;
+}
+
+/* Date on single page */
+.vinyl-date {
+  font-size: 0.9rem;
+  color: #999;
+  margin-bottom: 0.5rem;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .vinyl-record {
+    background: #1a1a1a;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .vinyl-record:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .vinyl-cover {
+    background: #2a2a2a;
+  }
+
+  .vinyl-artist,
+  .vinyl-stats {
+    color: #aaa;
+  }
+
+  .vinyl-year,
+  .vinyl-label {
+    color: #888;
+  }
+
+  .vinyl-link {
+    background: #2a2a2a;
+    color: #ddd;
+  }
+
+  .vinyl-link:hover {
+    background: #333;
+  }
+
+  .vinyl-meta dt {
+    color: #aaa;
+  }
+
+  .vinyl-description-content {
+    color: #ccc;
+  }
+
+  .vinyl-empty {
+    background: #1a1a1a;
+    color: #aaa;
+  }
+
+  .vinyl-notes,
+  .vinyl-content,
+  .vinyl-description,
+  .vinyl-pictures,
+  .vinyl-footer {
+    border-top-color: #333;
+  }
+
+  .vinyl-footer a {
+    color: #aaa;
+  }
+
+  .vinyl-footer a:hover {
+    color: #fff;
+  }
+
+  .vinyl-genre {
+    background: #1a3a4a;
+    color: #6cb3d9;
+  }
 }

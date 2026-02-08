@@ -1,130 +1,109 @@
 # Vinyl Collection
 
-A Micro.blog plug-in for tracking your vinyl record collection.
+A Micro.blog plug-in for tracking your vinyl record collection. Add records as easily as writing a regular post!
 
 ## Installation
 
-### From GitHub
-
 1. Go to **Plug-ins** in your Micro.blog account
-2. Click **Find Plug-ins**
-3. Scroll to the bottom and click **New Plug-in**
-4. Enter `https://github.com/kevrodg/microblog-vinyl-collection` as the Clone URL
-5. Click **Add Plug-in**
-6. The plugin will be installed and you'll see an **Update** button appear whenever a new version is available on GitHub
+2. Click **Find Plug-ins** and search for "Vinyl Collection", or click **New Plug-in** and enter `https://github.com/kevrodg/microblog-vinyl-collection` as the Clone URL
+3. Click **Install** or **Add Plug-in**
 
-### From Plug-in Directory (Once Published)
+## Quick Start
 
-1. Go to **Plug-ins** in your Micro.blog account
-2. Click **Find Plug-ins** and search for "Vinyl Collection"
-3. Click **Install**
-4. Updates will be automatic from the plugin directory
+### 1. Create a "Vinyl" Category
 
-## Usage
+Go to **Posts → Categories** and create a new category called "Vinyl" (case-sensitive).
 
-### Adding Records
+### 2. Add a Record
 
-Create markdown files in a `content/vinyl/` directory with front matter like:
+Create a new post with this format:
 
-```yaml
----
-title: "Kind of Blue"
-date: 2024-01-15
-type: vinyl
-artist: "Miles Davis"
-album: "Kind of Blue"
-label: "Columbia"
-year: "1959"
-format: "LP"
-cover: "/uploads/kind-of-blue.jpg"
-genres: ["Jazz", "Modal Jazz"]
-description: |
-  A landmark album in the history of jazz, featuring John Coltrane
-  and Cannonball Adderley. Recorded in a single session in 1959.
-pictures:
-  - "/uploads/kind-of-blue/back-cover.jpg"
-  - "/uploads/kind-of-blue/liner-notes.jpg"
-notes: "Original pressing, excellent condition"
----
+```
+🎵 Kind of Blue
+Artist: Miles Davis
+Year: 1959
+Label: Columbia
+Format: LP
+Genres: Jazz, Modal Jazz
 
-Optional additional notes or content here.
+Just picked this up at the local record store. Original pressing in great condition!
 ```
 
-### Viewing Your Collection
+### 3. Assign the Category
 
-Visit `yoursite.micro.blog/vinyl/` to see your full collection.
+Select the "Vinyl" category for your post, add a cover photo if you have one, and publish!
 
-### Browsing by Taxonomy
+Your record will now appear in your collection at `yoursite.micro.blog/categories/vinyl/`.
 
-The plugin automatically creates pages for browsing your collection by:
+## Post Format
 
-- **Artist**: `/artist/the-beatles/`
-- **Genre**: `/genres/jazz/`
-- **Label**: `/label/blue-note/`
-- **Year**: `/year/1969/`
-- **Format**: `/format/lp/`
+The first line is the album title (you can start with an emoji like 🎵 or 💿).
 
-These pages are automatically generated from the front matter in your vinyl records.
+Then include any of these fields (all optional):
+- `Artist:` - Artist or band name
+- `Year:` - Release year
+- `Label:` - Record label
+- `Format:` - LP, 7", 12", etc.
+- `Genres:` - Comma-separated list
 
-### Embedding Records in Blog Posts
+Anything after the fields becomes your personal notes about the record.
 
-You can embed individual vinyl records or your full collection in any blog post using the shortcode:
+### Minimal Example
 
-```markdown
-{{</* vinyl id="kind-of-blue" */>}}
+```
+Rumours
+Artist: Fleetwood Mac
 ```
 
-Or display your entire collection:
+### Full Example
+
+```
+🎵 Abbey Road
+Artist: The Beatles
+Year: 1969
+Label: Apple Records
+Format: LP
+Genres: Rock, Pop
+
+One of my all-time favorites. Found this at a garage sale for $5!
+The vinyl is in surprisingly good condition.
+```
+
+## Adding Cover Photos
+
+When creating your post, upload a photo before or after your text. Micro.blog will include it in your post's front matter, and the plugin will display it as the album cover.
+
+## Viewing Your Collection
+
+- **Collection Page**: Visit `/categories/vinyl/` to see all your records
+- **Individual Records**: Click any record to see full details
+
+## Embedding in Posts
+
+You can embed your vinyl collection in any blog post:
 
 ```markdown
 {{</* vinyl */>}}
 ```
 
-The `id` should match the filename of your vinyl record (without the `.md` extension).
+Show only the first 6 records:
 
-### Configuration
+```markdown
+{{</* vinyl limit="6" */>}}
+```
+
+## Configuration
 
 In **Plug-ins → Vinyl Collection → Settings**, you can customize:
 
-- **Page Title**: The heading displayed on your collection page
+- **Page Title**: The heading displayed on your collection page (default: "Vinyl Collection")
+- **Category Name**: The category to use for vinyl posts (default: "Vinyl")
 
-### Front Matter Fields
+## Tips
 
-#### Required Fields
-
-- **title**: The record title (defaults to album name)
-- **date**: Date added to collection
-- **type**: Must be `vinyl`
-- **artist**: Artist or band name
-- **album**: Album title
-
-#### Optional Fields
-
-- **label**: Record label (e.g., "Columbia", "Blue Note")
-- **year**: Release year of this pressing
-- **format**: Format type (e.g., "LP", "12\"", "7\"", "45rpm")
-- **cover**: Path to cover image
-- **genres**: Array of genre tags
-- **description**: Detailed album description (supports Markdown)
-- **pictures**: Array of additional image paths (back cover, liner notes, etc.)
-- **notes**: Personal notes about the record
-
-## File Structure
-
-```
-├── plugin.json          # Plugin metadata and settings
-├── archetypes/
-│   └── vinyl.md         # Template for new vinyl entries
-├── layouts/
-│   └── vinyl/
-│       ├── list.html    # Collection grid view
-│       └── single.html  # Individual record page
-└── static/
-    ├── css/
-    │   └── vinyl.css    # Styles
-    └── js/
-        └── vinyl.js     # JavaScript (future enhancements)
-```
+- **Photos**: The first photo becomes the cover. Additional photos appear as a gallery on the record's detail page.
+- **Genres**: Separate multiple genres with commas: `Genres: Rock, Blues, Soul`
+- **Notes**: Everything after the metadata fields becomes your personal notes, which supports Markdown formatting.
 
 ## License
 

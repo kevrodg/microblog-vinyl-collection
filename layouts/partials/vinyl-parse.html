@@ -1,0 +1,90 @@
+{{- /*
+  Parses vinyl post content to extract metadata.
+  
+  Expected format:
+    🎵 Album Title
+    Artist: Artist Name
+    Year: 1999
+    Label: Record Label
+    Format: LP
+    Genres: Rock, Jazz
+    
+    Description text here...
+  
+  Returns a dict with: album, artist, year, label, format, genres (slice), description, cover
+*/ -}}
+
+{{- /* Use RawContent to get original markdown, falling back to plainified Content */ -}}
+{{- $content := .RawContent | default (.Content | plainify) -}}
+{{- /* Normalize line endings and split */ -}}
+{{- $content = replace $content "\r\n" "\n" -}}
+{{- $content = replace $content "\r" "\n" -}}
+{{- $lines := split $content "\n" -}}
+
+{{- /* Initialize variables */ -}}
+{{- $album := "" -}}
+{{- $artist := "" -}}
+{{- $year := "" -}}
+{{- $label := "" -}}
+{{- $format := "" -}}
+{{- $genres := slice -}}
+{{- $description := "" -}}
+{{- $cover := "" -}}
+{{- $descLines := slice -}}
+{{- $inDescription := false -}}
+
+{{- /* Get cover image from post if available */ -}}
+{{- with .Params.photos -}}
+  {{- $cover = index . 0 -}}
+{{- end -}}
+{{- with .Params.images -}}
+  {{- if not $cover -}}
+    {{- $cover = index . 0 -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Parse each line */ -}}
+{{- range $i, $line := $lines -}}
+  {{- $trimmed := trim $line " \t\r" -}}
+  
+  {{- if eq $i 0 -}}
+    {{- /* First line is album title - remove emoji prefix if present */ -}}
+    {{- $album = replaceRE "^[🎵🎶💿📀♪♫🎤🎸🎹🥁🎺🎷🪕🎻\\s]+" "" $trimmed -}}
+    {{- $album = trim $album " " -}}
+  {{- else if hasPrefix $trimmed "Artist:" -}}
+    {{- $artist = trim (replaceRE "^Artist:\\s*" "" $trimmed) " " -}}
+  {{- else if hasPrefix $trimmed "Year:" -}}
+    {{- $year = trim (replaceRE "^Year:\\s*" "" $trimmed) " " -}}
+  {{- else if hasPrefix $trimmed "Label:" -}}
+    {{- $label = trim (replaceRE "^Label:\\s*" "" $trimmed) " " -}}
+  {{- else if hasPrefix $trimmed "Format:" -}}
+    {{- $format = trim (replaceRE "^Format:\\s*" "" $trimmed) " " -}}
+  {{- else if hasPrefix $trimmed "Genres:" -}}
+    {{- $genreStr := trim (replaceRE "^Genres:\\s*" "" $trimmed) " " -}}
+    {{- $genres = split $genreStr ", " -}}
+  {{- else if and (ne $trimmed "") (ne $artist "") -}}
+    {{- /* After we've seen Artist, non-field lines are description */ -}}
+    {{- $inDescription = true -}}
+    {{- $descLines = $descLines | append $trimmed -}}
+  {{- else if and $inDescription (eq $trimmed "") -}}
+    {{- /* Preserve paragraph breaks in description */ -}}
+    {{- $descLines = $descLines | append "" -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Join description lines */ -}}
+{{- $description = delimit $descLines "\n" | trim "\n " -}}
+
+{{- /* Return parsed data as dict */ -}}
+{{- return dict 
+    "album" $album 
+    "artist" $artist 
+    "year" $year 
+    "label" $label 
+    "format" $format 
+    "genres" $genres 
+    "description" $description 
+    "cover" $cover
+    "permalink" .Permalink
+    "date" .Date
+-}}

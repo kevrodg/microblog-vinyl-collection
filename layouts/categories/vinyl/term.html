@@ -1,0 +1,21 @@
+{{ define "main" }}
+<div class="vinyl-collection">
+  <h1>{{ .Site.Params.vinyl_page_title | default "Vinyl Collection" }}</h1>
+  
+  {{ $posts := .Pages }}
+  
+  <div class="vinyl-stats">
+    <p>{{ len $posts }} records in collection</p>
+  </div>
+
+  <div class="vinyl-grid">
+    {{ range $posts }}
+      {{ partial "vinyl-card.html" . }}
+    {{ end }}
+  </div>
+  
+  {{ if eq (len $posts) 0 }}
+  <p class="vinyl-empty">No records in your collection yet. Create a post and assign it to the "{{ .Site.Params.vinyl_category | default "Vinyl" }}" category to get started.</p>
+  {{ end }}
+</div>
+{{ end }}

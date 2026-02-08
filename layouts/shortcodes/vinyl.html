@@ -1,34 +1,35 @@
-{{- $id := .Get "id" -}}
-{{- if $id -}}
-  {{- /* Display a single vinyl record by ID */ -}}
-  {{- range where $.Site.Pages "Params.type" "vinyl" -}}
-    {{- if eq .File.BaseFileName $id -}}
-      <div class="vinyl-embed">
-        <div class="vinyl-record">
-          {{- with .Params.cover -}}
-          <div class="vinyl-cover">
-            <img src="{{ . }}" alt="{{ $.Params.album }} cover" loading="lazy">
-          </div>
-          {{- end -}}
-          <div class="vinyl-info">
-            <h3 class="vinyl-album">{{ .Params.album | default .Title }}</h3>
-            <p class="vinyl-artist">{{ .Params.artist }}</p>
-            {{- with .Params.year -}}<p class="vinyl-year">{{ . }}</p>{{- end -}}
-            <div class="vinyl-meta-tags">
-              {{- with .Params.format -}}<span class="vinyl-format">{{ . }}</span>{{- end -}}
-              {{- with .Params.genres -}}
-                {{- range . -}}
-                  <span class="vinyl-genre">{{ . }}</span>
-                {{- end -}}
-              {{- end -}}
-            </div>
-          </div>
-          <a href="{{ .Permalink }}" class="vinyl-link">View Details</a>
-        </div>
-      </div>
-    {{- end -}}
+{{- /*
+  Vinyl Collection Shortcode
+  
+  Usage:
+    vinyl                - Display all vinyl posts as a grid
+    vinyl limit="6"      - Display limited number of records
+*/ -}}
+
+{{- $limit := .Get "limit" | default 0 -}}
+{{- $category := $.Site.Params.vinyl_category | default "Vinyl" -}}
+
+{{- /* Find all posts in the Vinyl category */ -}}
+{{- $vinylPosts := slice -}}
+{{- range $.Site.Pages -}}
+  {{- if in .Params.categories $category -}}
+    {{- $vinylPosts = $vinylPosts | append . -}}
   {{- end -}}
-{{- else -}}
-  {{- /* Display the full collection */ -}}
-  {{- partial "vinyl-collection.html" . -}}
 {{- end -}}
+
+{{- /* Apply limit if specified */ -}}
+{{- if and (gt $limit 0) (gt (len $vinylPosts) $limit) -}}
+  {{- $vinylPosts = first $limit $vinylPosts -}}
+{{- end -}}
+
+<div class="vinyl-collection vinyl-embed">
+  {{- if gt (len $vinylPosts) 0 -}}
+  <div class="vinyl-grid">
+    {{- range $vinylPosts -}}
+      {{- partial "vinyl-card.html" . -}}
+    {{- end -}}
+  </div>
+  {{- else -}}
+  <p class="vinyl-empty">No records in your collection yet.</p>
+  {{- end -}}
+</div>

@@ -1,33 +1,37 @@
 {{ define "main" }}
+{{- $vinyl := partial "vinyl-parse.html" . -}}
+
 <article class="vinyl-single">
   <header class="vinyl-header">
-    {{ with .Params.cover }}
+    {{ with $vinyl.cover }}
     <div class="vinyl-cover-large">
-      <img src="{{ . }}" alt="{{ $.Params.album }} cover">
+      <img src="{{ . }}" alt="{{ $vinyl.album }} cover">
     </div>
     {{ end }}
     
     <div class="vinyl-details">
-      <h1 class="vinyl-album">{{ .Params.album }}</h1>
-      <p class="vinyl-artist">{{ .Params.artist }}</p>
+      <h1 class="vinyl-album">{{ $vinyl.album }}</h1>
+      {{ with $vinyl.artist }}
+      <p class="vinyl-artist">{{ . }}</p>
+      {{ end }}
       
       <dl class="vinyl-meta">
-        {{ with .Params.year }}
+        {{ with $vinyl.year }}
         <dt>Year</dt>
         <dd>{{ . }}</dd>
         {{ end }}
         
-        {{ with .Params.format }}
+        {{ with $vinyl.format }}
         <dt>Format</dt>
         <dd>{{ . }}</dd>
         {{ end }}
         
-        {{ with .Params.label }}
+        {{ with $vinyl.label }}
         <dt>Label</dt>
         <dd>{{ . }}</dd>
         {{ end }}
         
-        {{ with .Params.genres }}
+        {{ with $vinyl.genres }}
         <dt>Genres</dt>
         <dd>{{ delimit . ", " }}</dd>
         {{ end }}
@@ -35,18 +39,20 @@
     </div>
   </header>
 
-  {{ with .Params.description }}
+  {{ with $vinyl.description }}
   <section class="vinyl-description">
-    <h2>About This Album</h2>
+    <h2>Notes</h2>
     <div class="vinyl-description-content">{{ . | markdownify }}</div>
   </section>
   {{ end }}
 
-  {{ with .Params.pictures }}
+  {{- /* Show any photos beyond the first (cover) as a gallery */ -}}
+  {{ with .Params.photos }}
+  {{ if gt (len .) 1 }}
   <section class="vinyl-pictures">
     <h2>Additional Pictures</h2>
     <div class="vinyl-gallery">
-      {{ range . }}
+      {{ range after 1 . }}
         <a href="{{ . }}" class="vinyl-gallery-item">
           <img src="{{ . }}" alt="Album picture" loading="lazy">
         </a>
@@ -54,22 +60,11 @@
     </div>
   </section>
   {{ end }}
-
-  {{ with .Params.notes }}
-  <section class="vinyl-notes">
-    <h2>Notes</h2>
-    <p>{{ . }}</p>
-  </section>
-  {{ end }}
-
-  {{ with .Content }}
-  <section class="vinyl-content">
-    {{ . }}
-  </section>
   {{ end }}
 
   <footer class="vinyl-footer">
-    <a href="{{ "vinyl" | relURL }}">&larr; Back to Collection</a>
+    <p class="vinyl-date">Added {{ $vinyl.date | time.Format "January 2, 2006" }}</p>
+    <a href="{{ "/categories/vinyl/" | relURL }}">&larr; Back to Collection</a>
   </footer>
 </article>
 {{ end }}

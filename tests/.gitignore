@@ -1,0 +1,7 @@
+# Hugo build output
+public/
+
+# Copied layouts (copied from project root during test run)
+layouts/shortcodes/
+layouts/partials/
+layouts/categories/
