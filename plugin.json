@@ -1,0 +1,16 @@
+{
+  "title": "Vinyl Collection",
+  "description": "Track and display your vinyl record collection",
+  "version": "1.0.0",
+  "author": "Kev Rodgers",
+  "css": ["static/css/vinyl.css"],
+  "js": ["static/js/vinyl.js"],
+  "parameters": [
+    {
+      "key": "params.vinyl_page_title",
+      "label": "Page Title",
+      "description": "Title for your vinyl collection page",
+      "default": "Vinyl Collection"
+    }
+  ]
+}

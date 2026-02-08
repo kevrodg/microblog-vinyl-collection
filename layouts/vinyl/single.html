@@ -1,0 +1,50 @@
+{{ define "main" }}
+<article class="vinyl-single">
+  <header class="vinyl-header">
+    {{ with .Params.cover }}
+    <div class="vinyl-cover-large">
+      <img src="{{ . }}" alt="{{ $.Params.album }} cover">
+    </div>
+    {{ end }}
+    
+    <div class="vinyl-details">
+      <h1 class="vinyl-album">{{ .Params.album }}</h1>
+      <p class="vinyl-artist">{{ .Params.artist }}</p>
+      
+      <dl class="vinyl-meta">
+        {{ with .Params.year }}
+        <dt>Year</dt>
+        <dd>{{ . }}</dd>
+        {{ end }}
+        
+        {{ with .Params.format }}
+        <dt>Format</dt>
+        <dd>{{ . }}</dd>
+        {{ end }}
+        
+        {{ with .Params.genres }}
+        <dt>Genres</dt>
+        <dd>{{ delimit . ", " }}</dd>
+        {{ end }}
+      </dl>
+    </div>
+  </header>
+
+  {{ with .Params.notes }}
+  <section class="vinyl-notes">
+    <h2>Notes</h2>
+    <p>{{ . }}</p>
+  </section>
+  {{ end }}
+
+  {{ with .Content }}
+  <section class="vinyl-content">
+    {{ . }}
+  </section>
+  {{ end }}
+
+  <footer class="vinyl-footer">
+    <a href="{{ "vinyl" | relURL }}">&larr; Back to Collection</a>
+  </footer>
+</article>
+{{ end }}
