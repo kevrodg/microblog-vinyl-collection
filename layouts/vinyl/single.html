@@ -22,6 +22,11 @@
         <dd>{{ . }}</dd>
         {{ end }}
         
+        {{ with .Params.label }}
+        <dt>Label</dt>
+        <dd>{{ . }}</dd>
+        {{ end }}
+        
         {{ with .Params.genres }}
         <dt>Genres</dt>
         <dd>{{ delimit . ", " }}</dd>
@@ -29,6 +34,26 @@
       </dl>
     </div>
   </header>
+
+  {{ with .Params.description }}
+  <section class="vinyl-description">
+    <h2>About This Album</h2>
+    <div class="vinyl-description-content">{{ . | markdownify }}</div>
+  </section>
+  {{ end }}
+
+  {{ with .Params.pictures }}
+  <section class="vinyl-pictures">
+    <h2>Additional Pictures</h2>
+    <div class="vinyl-gallery">
+      {{ range . }}
+        <a href="{{ . }}" class="vinyl-gallery-item">
+          <img src="{{ . }}" alt="Album picture" loading="lazy">
+        </a>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
 
   {{ with .Params.notes }}
   <section class="vinyl-notes">

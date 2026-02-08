@@ -1,1 +1,34 @@
-{{ partial "vinyl-collection.html" . }}
+{{- $id := .Get "id" -}}
+{{- if $id -}}
+  {{- /* Display a single vinyl record by ID */ -}}
+  {{- range where $.Site.Pages "Params.type" "vinyl" -}}
+    {{- if eq .File.BaseFileName $id -}}
+      <div class="vinyl-embed">
+        <div class="vinyl-record">
+          {{- with .Params.cover -}}
+          <div class="vinyl-cover">
+            <img src="{{ . }}" alt="{{ $.Params.album }} cover" loading="lazy">
+          </div>
+          {{- end -}}
+          <div class="vinyl-info">
+            <h3 class="vinyl-album">{{ .Params.album | default .Title }}</h3>
+            <p class="vinyl-artist">{{ .Params.artist }}</p>
+            {{- with .Params.year -}}<p class="vinyl-year">{{ . }}</p>{{- end -}}
+            <div class="vinyl-meta-tags">
+              {{- with .Params.format -}}<span class="vinyl-format">{{ . }}</span>{{- end -}}
+              {{- with .Params.genres -}}
+                {{- range . -}}
+                  <span class="vinyl-genre">{{ . }}</span>
+                {{- end -}}
+              {{- end -}}
+            </div>
+          </div>
+          <a href="{{ .Permalink }}" class="vinyl-link">View Details</a>
+        </div>
+      </div>
+    {{- end -}}
+  {{- end -}}
+{{- else -}}
+  {{- /* Display the full collection */ -}}
+  {{- partial "vinyl-collection.html" . -}}
+{{- end -}}

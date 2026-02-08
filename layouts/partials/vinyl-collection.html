@@ -17,11 +17,16 @@
       <div class="vinyl-info">
         <h2 class="vinyl-album">{{ .album }}</h2>
         <p class="vinyl-artist">{{ .artist }}</p>
+        {{ with .label }}<p class="vinyl-label">{{ . }}</p>{{ end }}
         {{ with .year }}<p class="vinyl-year">{{ . }}</p>{{ end }}
-        {{ with .format }}<span class="vinyl-format">{{ . }}</span>{{ end }}
-        {{ with .genres }}
-        <p class="vinyl-genres">{{ delimit . ", " }}</p>
-        {{ end }}
+        <div class="vinyl-meta-tags">
+          {{ with .format }}<span class="vinyl-format">{{ . }}</span>{{ end }}
+          {{ with .genres }}
+            {{ range . }}
+              <span class="vinyl-genre">{{ . }}</span>
+            {{ end }}
+          {{ end }}
+        </div>
       </div>
     </article>
     {{ end }}

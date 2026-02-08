@@ -177,3 +177,93 @@
 .vinyl-footer a:hover {
   color: #333;
 }
+
+/* Genre and Meta Tags */
+.vinyl-meta-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.vinyl-genre {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  background: #e8f4f8;
+  color: #0066cc;
+  border-radius: 3px;
+}
+
+.vinyl-label {
+  font-size: 0.9rem;
+  color: #888;
+  margin: 0.25rem 0;
+  font-style: italic;
+}
+
+/* Description Section */
+.vinyl-description {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}
+
+.vinyl-description h2 {
+  font-size: 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.vinyl-description-content {
+  line-height: 1.6;
+  color: #444;
+}
+
+/* Additional Pictures Gallery */
+.vinyl-pictures {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}
+
+.vinyl-pictures h2 {
+  font-size: 1.25rem;
+  margin: 0 0 1rem;
+}
+
+.vinyl-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.vinyl-gallery-item {
+  display: block;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #f0f0f0;
+  transition: transform 0.2s ease;
+}
+
+.vinyl-gallery-item:hover {
+  transform: scale(1.05);
+}
+
+.vinyl-gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Vinyl Embed (for shortcode) */
+.vinyl-embed {
+  margin: 2rem 0;
+}
+
+.vinyl-embed .vinyl-record {
+  max-width: 400px;
+}
+
+.vinyl-embed .vinyl-album {
+  font-size: 1.25rem;
+}

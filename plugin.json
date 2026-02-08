@@ -1,7 +1,7 @@
 {
+  "version": "1.1.0",
   "title": "Vinyl Collection",
-  "description": "Track and display your vinyl record collection",
-  "version": "1.0.0",
+  "description": "Track and display your vinyl record collection with taxonomies, detailed metadata, and shortcodes",
   "author": "Kev Rodgers",
   "css": ["static/css/vinyl.css"],
   "js": ["static/js/vinyl.js"],
@@ -12,5 +12,14 @@
       "description": "Title for your vinyl collection page",
       "default": "Vinyl Collection"
     }
-  ]
+  ],
+  "hugo": {
+    "taxonomies": {
+      "artist": "artist",
+      "genres": "genres",
+      "label": "label",
+      "year": "year",
+      "format": "format"
+    }
+  }
 }
