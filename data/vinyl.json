@@ -1,0 +1,14 @@
+{
+  "records": [
+    {
+      "id": "abbey-road",
+      "artist": "The Beatles",
+      "album": "Abbey Road",
+      "year": "1969",
+      "format": "LP",
+      "cover": "",
+      "genres": ["Rock", "Pop"],
+      "notes": "First test record"
+    }
+  ]
+}

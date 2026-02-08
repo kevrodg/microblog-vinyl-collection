@@ -1,0 +1,32 @@
+<div class="vinyl-collection">
+  <h1>{{ .Site.Params.vinyl_page_title | default "Vinyl Collection" }}</h1>
+  
+  {{ with .Site.Data.vinyl.records }}
+  <div class="vinyl-stats">
+    <p>{{ len . }} records in collection</p>
+  </div>
+
+  <div class="vinyl-grid">
+    {{ range . }}
+    <article class="vinyl-record">
+      {{ with .cover }}
+      <div class="vinyl-cover">
+        <img src="{{ . }}" alt="{{ $.album }} cover" loading="lazy">
+      </div>
+      {{ end }}
+      <div class="vinyl-info">
+        <h2 class="vinyl-album">{{ .album }}</h2>
+        <p class="vinyl-artist">{{ .artist }}</p>
+        {{ with .year }}<p class="vinyl-year">{{ . }}</p>{{ end }}
+        {{ with .format }}<span class="vinyl-format">{{ . }}</span>{{ end }}
+        {{ with .genres }}
+        <p class="vinyl-genres">{{ delimit . ", " }}</p>
+        {{ end }}
+      </div>
+    </article>
+    {{ end }}
+  </div>
+  {{ else }}
+  <p>No records in collection yet. Add records to <code>data/vinyl.json</code>.</p>
+  {{ end }}
+</div>
